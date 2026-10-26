@@ -87,12 +87,20 @@ public final class KeyPreviewChoreographer {
         }
         // Dismiss preview without animation.
         mShowingKeyPreviewViews.remove(key);
-        if (tag instanceof Animator) {
+        if (tag instanceof KeyPreviewAnimators) {
+            ((KeyPreviewAnimators)tag).cancel();
+        } else if (tag instanceof Animator) {
             ((Animator)tag).cancel();
         }
         keyPreviewView.setTag(null);
         keyPreviewView.setVisibility(View.INVISIBLE);
         mFreeKeyPreviewViews.add(keyPreviewView);
+    }
+
+    public void cancelAllOngoingEvents() {
+        for (final Key key : new java.util.ArrayList<>(mShowingKeyPreviewViews.keySet())) {
+            dismissKeyPreview(key, false /* withAnimation */);
+        }
     }
 
     public void placeAndShowKeyPreview(final Key key, final KeyboardIconsSet iconsSet,
@@ -212,6 +220,11 @@ public final class KeyPreviewChoreographer {
                 return;
             }
             mDismissAnimator.start();
+        }
+
+        public void cancel() {
+            mShowUpAnimator.cancel();
+            mDismissAnimator.cancel();
         }
 
         @Override

@@ -405,23 +405,25 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
 
         sDrawingProxy.onKeyReleased(key, withAnimation);
 
-        if (key.isShift()) {
+        if (key.isShift() && mKeyboard != null && mKeyboard.mShiftKeys != null) {
             for (final Key shiftKey : mKeyboard.mShiftKeys) {
-                if (shiftKey != key) {
+                if (shiftKey != null && shiftKey != key) {
                     sDrawingProxy.onKeyReleased(shiftKey, false /* withAnimation */);
                 }
             }
         }
 
-        if (key.altCodeWhileTyping()) {
+        if (key.altCodeWhileTyping() && mKeyboard != null) {
             final int altCode = key.getAltCode();
             final Key altKey = mKeyboard.getKey(altCode);
             if (altKey != null) {
                 sDrawingProxy.onKeyReleased(altKey, false /* withAnimation */);
             }
-            for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
-                if (k != key && k.getAltCode() == altCode) {
-                    sDrawingProxy.onKeyReleased(k, false /* withAnimation */);
+            if (mKeyboard.mAltCodeKeysWhileTyping != null) {
+                for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
+                    if (k != null && k != key && k.getAltCode() == altCode) {
+                        sDrawingProxy.onKeyReleased(k, false /* withAnimation */);
+                    }
                 }
             }
         }
@@ -447,23 +449,25 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         final boolean noKeyPreview = sInGesture || needsToSuppressKeyPreviewPopup(eventTime);
         sDrawingProxy.onKeyPressed(key, !noKeyPreview);
 
-        if (key.isShift()) {
+        if (key.isShift() && mKeyboard != null && mKeyboard.mShiftKeys != null) {
             for (final Key shiftKey : mKeyboard.mShiftKeys) {
-                if (shiftKey != key) {
+                if (shiftKey != null && shiftKey != key) {
                     sDrawingProxy.onKeyPressed(shiftKey, false /* withPreview */);
                 }
             }
         }
 
-        if (altersCode) {
+        if (altersCode && mKeyboard != null) {
             final int altCode = key.getAltCode();
             final Key altKey = mKeyboard.getKey(altCode);
             if (altKey != null) {
                 sDrawingProxy.onKeyPressed(altKey, false /* withPreview */);
             }
-            for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
-                if (k != key && k.getAltCode() == altCode) {
-                    sDrawingProxy.onKeyPressed(k, false /* withPreview */);
+            if (mKeyboard.mAltCodeKeysWhileTyping != null) {
+                for (final Key k : mKeyboard.mAltCodeKeysWhileTyping) {
+                    if (k != null && k != key && k.getAltCode() == altCode) {
+                        sDrawingProxy.onKeyPressed(k, false /* withPreview */);
+                    }
                 }
             }
         }
@@ -704,7 +708,10 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 key = onDownKey(x, y, eventTime);
             }
 
-            if(key == null) return;
+            if(key == null) {
+                sTimerProxy.cancelKeyTimersOf(this);
+                return;
+            }
 
             startRepeatKey(key);
             startLongPressTimer(key);

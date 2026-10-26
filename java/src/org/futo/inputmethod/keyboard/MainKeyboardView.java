@@ -388,9 +388,16 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
      * @param keyboard the keyboard to display in this view
      */
     @Override
-    public void setKeyboard(final Keyboard keyboard) {
+    public void setKeyboard(@Nullable final Keyboard keyboard) {
         // Remove any pending messages, except dismissing preview and key repeat.
         mTimerHandler.cancelLongPressTimers();
+        if (mKeyPreviewChoreographer != null) {
+            mKeyPreviewChoreographer.cancelAllOngoingEvents();
+        }
+        if (keyboard == null) {
+            super.setKeyboard(null);
+            return;
+        }
         super.setKeyboard(keyboard);
         mKeyDetector.setKeyboard(
                 keyboard, -getPaddingLeft(), -getPaddingTop() + getVerticalCorrection());
@@ -398,8 +405,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         mMoreKeysKeyboardCache.clear();
 
         mSpaceKey = keyboard.getKey(Constants.CODE_SPACE);
-        final int keyHeight = keyboard.mMostCommonKeyHeight - keyboard.mVerticalGap;
-        mLanguageOnSpacebarTextSize = Math.min(keyHeight, keyboard.mMostCommonKeyWidth) * mLanguageOnSpacebarTextRatio;
+        final int keyHeight = Math.max(1, keyboard.mMostCommonKeyHeight - keyboard.mVerticalGap);
+        final int keyWidth = Math.max(1, keyboard.mMostCommonKeyWidth);
+        mLanguageOnSpacebarTextSize = Math.min(keyHeight, keyWidth) * mLanguageOnSpacebarTextRatio;
 
         if (AccessibilityUtils.getInstance().isAccessibilityEnabled()) {
             if (mAccessibilityDelegate == null) {
@@ -487,10 +495,14 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             return;
         }
 
-        locatePreviewPlacerView();
-        getLocationInWindow(mOriginCoords);
-        mKeyPreviewChoreographer.placeAndShowKeyPreview(key, keyboard.mIconsSet, getKeyDrawParams(),
-                getWidth(), mOriginCoords, mDrawingPreviewPlacerView, isHardwareAccelerated());
+        try {
+            locatePreviewPlacerView();
+            getLocationInWindow(mOriginCoords);
+            mKeyPreviewChoreographer.placeAndShowKeyPreview(key, keyboard.mIconsSet, getKeyDrawParams(),
+                    getWidth(), mOriginCoords, mDrawingPreviewPlacerView, isHardwareAccelerated());
+        } catch (final Exception e) {
+            Log.e(TAG, "Error showing key preview", e);
+        }
     }
 
     private void dismissKeyPreviewWithoutDelay(@Nonnull final Key key) {

@@ -171,10 +171,18 @@ android {
             java.srcDirs = ['tests/src']
             manifest.srcFile "tests/AndroidManifest.xml"
         }
+
+        test {
+            java.srcDirs = ['java/test/src']
+        }
     }
 
     lintOptions {
         checkReleaseBuilds false
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     aaptOptions {

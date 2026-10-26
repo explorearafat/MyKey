@@ -75,27 +75,28 @@ object OrbitThemeHelper {
         val y = key.y
         val x = key.x
         val h = key.height
+        val w = key.width
         if (h > 0) {
             val row = y / h
             return when (row) {
                 0 -> {
-                    val idx = if (key.width > 0) (x / key.width).coerceIn(0, row1Colors.size - 1) else 0
+                    val idx = if (w > 0) (x / w).coerceIn(0, row1Colors.size - 1) else 0
                     row1Colors[idx]
                 }
                 1 -> {
-                    val idx = if (key.width > 0) (x / key.width).coerceIn(0, row2Colors.size - 1) else 0
+                    val idx = if (w > 0) (x / w).coerceIn(0, row2Colors.size - 1) else 0
                     row2Colors[idx]
                 }
                 2 -> {
                     if (x < h) COLOR_YELLOW
                     else {
-                        val idx = if (key.width > 0) ((x - h) / key.width).coerceIn(0, row3Colors.size - 1) else 0
+                        val idx = if (w > 0) ((x - h) / w).coerceIn(0, row3Colors.size - 1) else 0
                         row3Colors[idx]
                     }
                 }
                 else -> {
-                    if (x < key.width * 2) COLOR_RED
-                    else if (x > key.width * 6) COLOR_RED
+                    if (w > 0 && x < w * 2) COLOR_RED
+                    else if (w > 0 && x > w * 6) COLOR_RED
                     else COLOR_DARK
                 }
             }
@@ -149,17 +150,12 @@ object OrbitThemeHelper {
         return getDrawableForColor(color, cornerRadius)
     }
 
-    // Cached popup preview drawables matching key colors
-    private val previewDrawableCache = HashMap<Int, ShapeDrawable>()
-
-    @Synchronized
     fun getKeyPreviewBackground(key: Key, cornerRadius: Float, width: Int, height: Int, bottomPadding: Int): Drawable {
         val color = getKeyBaseColor(key)
-        val existing = previewDrawableCache[color]
-        if (existing != null) {
-            return existing
-        }
-        val d = ShapeDrawable().apply {
+        val safeWidth = if (width > 0) width else 48
+        val safeHeight = if (height > 0) height else 24
+        val safePadding = if (bottomPadding in 0 until safeHeight) bottomPadding else 0
+        return ShapeDrawable().apply {
             paint.color = color
             shape = RoundRectShape(
                 floatArrayOf(
@@ -167,11 +163,9 @@ object OrbitThemeHelper {
                     cornerRadius, cornerRadius, cornerRadius, cornerRadius
                 ), null, null
             )
-            intrinsicWidth = width
-            intrinsicHeight = height
-            setPadding(0, 0, 0, bottomPadding)
+            intrinsicWidth = safeWidth
+            intrinsicHeight = safeHeight
+            setPadding(0, 0, 0, safePadding)
         }
-        previewDrawableCache[color] = d
-        return d
     }
 }

@@ -80,33 +80,33 @@ public final class MoreKeysKeyboard extends Keyboard {
                 final boolean isMoreKeysFixedColumn, final boolean isMoreKeysFixedOrder,
                 final int dividerWidth) {
             mIsMoreKeysFixedOrder = isMoreKeysFixedOrder;
-            if (parentKeyboardWidth / keyWidth < Math.min(numKeys, numColumn)) {
-                throw new IllegalArgumentException("Keyboard is too small to hold more keys: "
-                        + parentKeyboardWidth + " " + keyWidth + " " + numKeys + " " + numColumn);
-            }
-            mDefaultKeyWidth = keyWidth;
-            mDefaultRowHeight = rowHeight;
+            final int safeKeyWidth = Math.max(1, keyWidth);
+            final int maxCols = Math.max(1, parentKeyboardWidth / safeKeyWidth);
+            final int effectiveNumColumn = Math.max(1, Math.min(numColumn, maxCols));
 
-            final int numRows = (numKeys + numColumn - 1) / numColumn;
-            mNumRows = numRows;
-            final int numColumns = isMoreKeysFixedColumn ? Math.min(numKeys, numColumn)
-                    : getOptimizedColumns(numKeys, numColumn);
-            mNumColumns = numColumns;
-            final int topKeys = numKeys % numColumns;
-            mTopKeys = topKeys == 0 ? numColumns : topKeys;
+            mDefaultKeyWidth = safeKeyWidth;
+            mDefaultRowHeight = Math.max(1, rowHeight);
 
-            final int numLeftKeys = (numColumns - 1) / 2;
-            final int numRightKeys = numColumns - numLeftKeys; // including default key.
+            final int numRows = (numKeys + effectiveNumColumn - 1) / effectiveNumColumn;
+            mNumRows = Math.max(1, numRows);
+            final int numColumns = isMoreKeysFixedColumn ? Math.min(numKeys, effectiveNumColumn)
+                    : getOptimizedColumns(numKeys, effectiveNumColumn);
+            mNumColumns = Math.max(1, numColumns);
+            final int topKeys = numKeys % mNumColumns;
+            mTopKeys = topKeys == 0 ? mNumColumns : topKeys;
+
+            final int numLeftKeys = (mNumColumns - 1) / 2;
+            final int numRightKeys = mNumColumns - numLeftKeys; // including default key.
             // Maximum number of keys we can layout both side of the parent key
-            final int maxLeftKeys = coordXInParent / keyWidth;
-            final int maxRightKeys = (parentKeyboardWidth - coordXInParent) / keyWidth;
+            final int maxLeftKeys = Math.max(0, coordXInParent / safeKeyWidth);
+            final int maxRightKeys = Math.max(0, (parentKeyboardWidth - coordXInParent) / safeKeyWidth);
             int leftKeys, rightKeys;
             if (numLeftKeys > maxLeftKeys) {
                 leftKeys = maxLeftKeys;
-                rightKeys = numColumns - leftKeys;
+                rightKeys = Math.max(0, mNumColumns - leftKeys);
             } else if (numRightKeys > maxRightKeys + 1) {
-                rightKeys = maxRightKeys + 1; // include default key
-                leftKeys = numColumns - rightKeys;
+                rightKeys = Math.min(mNumColumns, maxRightKeys + 1); // include default key
+                leftKeys = Math.max(0, mNumColumns - rightKeys);
             } else {
                 leftKeys = numLeftKeys;
                 rightKeys = numRightKeys;
@@ -123,13 +123,13 @@ public final class MoreKeysKeyboard extends Keyboard {
                 leftKeys++;
                 rightKeys--;
             }
-            mLeftKeys = leftKeys;
-            mRightKeys = rightKeys;
+            mLeftKeys = Math.max(0, leftKeys);
+            mRightKeys = Math.max(0, rightKeys);
 
             // Adjustment of the top row.
             mTopRowAdjustment = isMoreKeysFixedOrder ? getFixedOrderTopRowAdjustment()
                     : getAutoOrderTopRowAdjustment();
-            mDividerWidth = dividerWidth;
+            mDividerWidth = Math.max(0, dividerWidth);
             mColumnWidth = mDefaultKeyWidth + mDividerWidth;
             mBaseWidth = mOccupiedWidth = mNumColumns * mColumnWidth - mDividerWidth;
             // Need to subtract the bottom row's gutter only.

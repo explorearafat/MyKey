@@ -98,12 +98,21 @@ public class KeyPreviewView extends androidx.appcompat.widget.AppCompatTextView 
         background.getPadding(mBackgroundPadding);
         final int maxWidth = background.getIntrinsicWidth() - mBackgroundPadding.left
                 - mBackgroundPadding.right;
+        if (maxWidth <= 0) {
+            return;
+        }
         final float width = getTextWidth(text, getPaint());
+        if (width <= 0.0f || Float.isNaN(width)) {
+            return;
+        }
         if (width <= maxWidth) {
             sNoScaleXTextSet.add(text);
             return;
         }
-        setTextScaleX(maxWidth / width);
+        final float scaleX = maxWidth / width;
+        if (Float.isFinite(scaleX) && scaleX > 0.0f) {
+            setTextScaleX(Math.min(1.0f, scaleX));
+        }
     }
 
     public static void clearTextCache() {

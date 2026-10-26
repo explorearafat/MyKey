@@ -162,7 +162,24 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         // TODO: pass this object to setKeyboard instead of getting the current values.
         final MainKeyboardView keyboardView = mKeyboardView;
         final Keyboard oldKeyboard = keyboardView.getKeyboard();
-        final Keyboard newKeyboard = mKeyboardLayoutSet.getKeyboard(keyboardId);
+        if (mKeyboardLayoutSet == null) {
+            return;
+        }
+        Keyboard newKeyboard;
+        try {
+            newKeyboard = mKeyboardLayoutSet.getKeyboard(keyboardId);
+        } catch (final Exception e) {
+            Log.e(TAG, "Failed to get keyboard id: " + keyboardId + ", falling back to alphabet", e);
+            try {
+                newKeyboard = mKeyboardLayoutSet.getKeyboard(KeyboardId.ELEMENT_ALPHABET);
+            } catch (final Exception fallbackEx) {
+                Log.e(TAG, "Failed to get fallback alphabet keyboard", fallbackEx);
+                newKeyboard = null;
+            }
+        }
+        if (newKeyboard == null) {
+            return;
+        }
         keyboardView.setKeyboard(newKeyboard);
         mCurrentInputView.setKeyboardTopPadding(newKeyboard.mTopPadding);
         keyboardView.setKeyPreviewPopupEnabled(
@@ -358,7 +375,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
             mLatinIMELegacy.startShowingInputView(true);
             if (toggleState == KeyboardSwitchState.EMOJI) {
                 setEmojiKeyboard();
-            } else {
+            } else if (toggleState.mKeyboardId >= 0) {
                 mMainKeyboardFrame.setVisibility(View.VISIBLE);
                 mKeyboardView.setVisibility(View.VISIBLE);
                 setKeyboard(toggleState.mKeyboardId, toggleState);
@@ -423,8 +440,12 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         if (mKeyboardView == null || !mKeyboardView.isShown()) {
             return false;
         }
-        int activeKeyboardId = mKeyboardView.getKeyboard().mId.mElementId;
-        for (int keyboardId : keyboardIds) {
+        final Keyboard keyboard = mKeyboardView.getKeyboard();
+        if (keyboard == null || keyboard.mId == null) {
+            return false;
+        }
+        final int activeKeyboardId = keyboard.mId.mElementId;
+        for (final int keyboardId : keyboardIds) {
             if (activeKeyboardId == keyboardId) {
                 return true;
             }

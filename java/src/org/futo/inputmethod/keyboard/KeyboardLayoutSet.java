@@ -202,9 +202,13 @@ public final class KeyboardLayoutSet {
         // specified as an elementKeyboard attribute in the file.
         // The KeyboardId is an internal key for a Keyboard object.
 
-        mParams.mIsSplitLayoutEnabled = mParams.mIsSplitLayoutEnabledByUser
-                && elementParams.mSupportsSplitLayout;
+        final boolean supportsSplit = (elementParams != null) && elementParams.mSupportsSplitLayout;
+        mParams.mIsSplitLayoutEnabled = mParams.mIsSplitLayoutEnabledByUser && supportsSplit;
         final KeyboardId id = new KeyboardId(keyboardLayoutSetElementId, mParams);
+        if (elementParams == null) {
+            Log.w(TAG, "Cannot find ElementParams for id: " + id);
+            return null;
+        }
         try {
             return getKeyboard(elementParams, id);
         } catch (final RuntimeException e) {
@@ -213,8 +217,12 @@ public final class KeyboardLayoutSet {
         }
     }
 
-    @Nonnull
-    private Keyboard getKeyboard(final ElementParams elementParams, final KeyboardId id) {
+    @Nullable
+    private Keyboard getKeyboard(@Nullable final ElementParams elementParams, final KeyboardId id) {
+        if (elementParams == null) {
+            Log.w(TAG, "Cannot build keyboard without ElementParams: " + id);
+            return null;
+        }
         final SoftReference<Keyboard> ref = sKeyboardCache.get(id);
         final Keyboard cachedKeyboard = (ref == null) ? null : ref.get();
         if (cachedKeyboard != null) {
