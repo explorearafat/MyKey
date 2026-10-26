@@ -52,11 +52,13 @@ import kotlinx.coroutines.launch
 import org.futo.inputmethod.announcements.Announcement
 import org.futo.inputmethod.announcements.AnnouncementManager
 import org.futo.inputmethod.announcements.AnnouncementSheet
+import org.futo.inputmethod.latin.ActiveSubtype
 import org.futo.inputmethod.latin.BuildConfig
 import org.futo.inputmethod.latin.R
 import org.futo.inputmethod.latin.Subtypes
 import org.futo.inputmethod.latin.SubtypesSetting
 import org.futo.inputmethod.latin.uix.TextEditPopupActivity
+import org.futo.inputmethod.latin.uix.getSettingBlocking
 import org.futo.inputmethod.latin.uix.setSettingBlocking
 import org.futo.inputmethod.latin.uix.settings.DeveloperDetailsCard
 import org.futo.inputmethod.latin.uix.settings.NavigationItem
@@ -155,6 +157,9 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             if (currentSubtypes.size > 1) currentSubtypes - subtypeStr else currentSubtypes
         }
         context.setSettingBlocking(SubtypesSetting.key, newSubtypes)
+        if (!enabled && context.getSettingBlocking(ActiveSubtype) == subtypeStr) {
+            context.setSettingBlocking(ActiveSubtype.key, newSubtypes.firstOrNull() ?: "")
+        }
     }
 
     LaunchedEffect(Unit) {

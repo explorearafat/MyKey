@@ -107,11 +107,6 @@ object Subtypes {
         val currentSubtypes = context.getSettingBlocking(SubtypesSetting)
         if(currentSubtypes.isNotEmpty()) {
             removeExtensionsIfNecessary(context)
-            val missing = defaultBengali.filter { !currentSubtypes.contains(it) }
-            if (missing.isNotEmpty()) {
-                val updated = currentSubtypes + missing
-                context.setSettingBlocking(SubtypesSetting.key, updated)
-            }
             return
         }
 
