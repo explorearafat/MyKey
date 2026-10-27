@@ -16,6 +16,7 @@ import org.futo.inputmethod.latin.uix.settings.pages.BlacklistScreen
 import org.futo.inputmethod.latin.uix.settings.pages.DevEditTextVariationsScreen
 import org.futo.inputmethod.latin.uix.settings.pages.DeveloperScreen
 import org.futo.inputmethod.latin.uix.settings.pages.HelpScreen
+import org.futo.inputmethod.latin.uix.settings.pages.FontsScreen
 import org.futo.inputmethod.latin.uix.settings.pages.HomeScreen
 import org.futo.inputmethod.latin.uix.settings.pages.LanguagesScreen
 import org.futo.inputmethod.latin.uix.settings.pages.PredictiveTextScreen
@@ -50,6 +51,7 @@ fun SettingsNavigator(
         addTypingNavigation(navController)
 
         composable("themes") { ThemeScreen(navController) }
+        composable("fonts") { FontsScreen(navController) }
         composable("help") { HelpScreen(navController) }
         composable("developer") { DeveloperScreen(navController) }
         composable("devtextedit") { DevEditTextVariationsScreen(navController) }

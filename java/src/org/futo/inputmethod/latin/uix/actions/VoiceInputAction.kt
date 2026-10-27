@@ -260,7 +260,7 @@ private class VoiceInputNoModelWindow(val locale: Locale) : ActionWindow {
             .clickable(enabled = true,
                 onClickLabel = null,
                 onClick = {
-                    context.openURI("https://keyboard.futo.org/voice-input-models", true)
+                    context.openURI("https://mykey.app/voice-input-models", true)
                 },
                 role = null,
                 indication = null,

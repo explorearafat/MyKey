@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Chinese Pinyin bottom row: z x c v b n m. V holds ü, the
+    convention most pinyin typists know.
+-->
+
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <Key latin:keySpec="z" />
+    <Key latin:keySpec="x" />
+    <Key latin:keySpec="c" />
+    <!-- U+00FC "ü" (typed as "v" in standard pinyin input) -->
+    <Key
+        latin:keySpec="v"
+        latin:moreKeys="&#x00FC;" />
+    <Key latin:keySpec="b" />
+    <Key latin:keySpec="n" />
+    <Key latin:keySpec="m" />
+</merge>

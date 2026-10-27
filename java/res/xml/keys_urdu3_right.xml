@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — right-most key of the Urdu bottom row.
+-->
+
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <!-- U+0686: "چ" ARABIC LETTER TCHEH -->
+    <Key
+        latin:keySpec="&#x0686;" />
+</merge>

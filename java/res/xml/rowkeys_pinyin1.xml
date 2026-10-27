@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Chinese Pinyin top row: q w e r t y u i o p with tone marks.
+-->
+
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <!-- U+0113 "ē" U+00E9 "é" U+011B "ě" U+00E8 "è" -->
+    <Key
+        latin:keySpec="e"
+        latin:moreKeys="&#x0113;,&#x00E9;,&#x011B;,&#x00E8;" />
+    <Key latin:keySpec="r" />
+    <Key latin:keySpec="t" />
+    <Key latin:keySpec="y" />
+    <!-- U+016B "ū" U+00FA "ú" U+01D4 "ǔ" U+00F9 "ù" U+00FC "ü" -->
+    <Key
+        latin:keySpec="u"
+        latin:moreKeys="&#x016B;,&#x00FA;,&#x01D4;,&#x00F9;,&#x00FC;" />
+    <!-- U+012B "ī" U+00ED "í" U+01D0 "ǐ" U+00EC "ì" -->
+    <Key
+        latin:keySpec="i"
+        latin:moreKeys="&#x012B;,&#x00ED;,&#x01D0;,&#x00EC;" />
+    <!-- U+014D "ō" U+00F3 "ó" U+01D2 "ǒ" U+00F2 "ò" -->
+    <Key
+        latin:keySpec="o"
+        latin:moreKeys="&#x014D;,&#x00F3;,&#x01D2;,&#x00F2;" />
+    <Key latin:keySpec="p" />
+</merge>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Urdu home row.
+-->
+
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+    <!-- U+0634: "ش" ARABIC LETTER SHEEN -->
+    <Key latin:keySpec="&#x0634;" />
+    <!-- U+0633: "س" ARABIC LETTER SEEN -->
+    <Key latin:keySpec="&#x0633;" />
+    <!-- U+06CC: "ی" ARABIC LETTER FARSI YEH
+         U+06D2: "ے" ARABIC LETTER YEH BARREE (Urdu bari yeh)
+         U+0626: "ئ" ARABIC LETTER YEH WITH HAMZA ABOVE
+         U+064A: "ي" ARABIC LETTER YEH -->
+    <Key
+        latin:keySpec="&#x06CC;"
+        latin:moreKeys="&#x06D2;,&#x0626;,&#x064A;" />
+    <!-- U+0628: "ب" ARABIC LETTER BEH -->
+    <Key latin:keySpec="&#x0628;" />
+    <!-- U+0644: "ل" ARABIC LETTER LAM -->
+    <Key latin:keySpec="&#x0644;" />
+    <!-- U+0627: "ا" ARABIC LETTER ALEF
+         U+0622: "آ" ARABIC LETTER ALEF WITH MADDA ABOVE
+         U+0623: "أ" ARABIC LETTER ALEF WITH HAMZA ABOVE
+         U+0625: "إ" ARABIC LETTER ALEF WITH HAMZA BELOW
+         U+0621: "ء" ARABIC LETTER HAMZA
+         U+0671: "ٱ" ARABIC LETTER ALEF WASLA -->
+    <Key
+        latin:keySpec="&#x0627;"
+        latin:moreKeys="!fixedColumnOrder!5,&#x0622;,&#x0623;,&#x0625;,&#x0621;,&#x0671;" />
+    <!-- U+062A: "ت" ARABIC LETTER TEH
+         U+0679: "ٹ" ARABIC LETTER TTEH (Urdu)
+         U+0629: "ة" ARABIC LETTER TEH MARBUTA -->
+    <Key
+        latin:keySpec="&#x062A;"
+        latin:moreKeys="&#x0679;,&#x0629;" />
+    <!-- U+0646: "ن" ARABIC LETTER NOON
+         U+06BA: "ں" ARABIC LETTER NOON GHUNNA (Urdu) -->
+    <Key
+        latin:keySpec="&#x0646;"
+        latin:moreKeys="&#x06BA;" />
+    <!-- U+0645: "م" ARABIC LETTER MEEM -->
+    <Key latin:keySpec="&#x0645;" />
+    <!-- U+06A9: "ک" ARABIC LETTER KEHEH (Urdu kaf)
+         U+0643: "ك" ARABIC LETTER KAF -->
+    <Key
+        latin:keySpec="&#x06A9;"
+        latin:moreKeys="&#x0643;" />
+    <!-- U+06AF: "گ" ARABIC LETTER GAF -->
+    <Key latin:keySpec="&#x06AF;" />
+</merge>

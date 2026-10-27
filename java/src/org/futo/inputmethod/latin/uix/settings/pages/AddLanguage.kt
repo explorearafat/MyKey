@@ -112,9 +112,12 @@ val LocaleLayoutMap = mapOf(
     "tl"     to   makeQwertyWithPrimary("spanish"),
     "tr"     to   makeQwertyWithPrimary("turkish"),
     "uk"     to   listOf("east_slavic", "east_slavic_phonetic"),
+    "ur"     to   listOf("urdu"),
     "uz_UZ"  to   listOf("uzbek"),
     "vi"     to   QwertyVariants,
     "zu"     to   QwertyVariants,
+    "zh"     to   listOf("chinese_pinyin"),
+    "zh_CN"  to   listOf("chinese_pinyin"),
     "zz"     to   QwertyVariants,
 )
 

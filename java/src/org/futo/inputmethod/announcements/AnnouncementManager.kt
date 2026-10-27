@@ -79,7 +79,7 @@ class AnnouncementManager(private val context: Context) {
                 requestMethod = "GET"
                 connectTimeout = 5000
                 readTimeout = 5000
-                setRequestProperty("User-Agent", "OrbitBoard/${BuildConfig.VERSION_NAME}")
+                setRequestProperty("User-Agent", "MyKey/${BuildConfig.VERSION_NAME}")
                 setRequestProperty("Accept", "application/json")
             }
 
@@ -95,7 +95,7 @@ class AnnouncementManager(private val context: Context) {
 
     companion object {
         const val DEFAULT_ANNOUNCEMENT_URL =
-            "https://raw.githubusercontent.com/fahitakrim/my-artifacts/main/apps/orbitboard/announcements.json"
+            "https://raw.githubusercontent.com/explorearafat/MyKey/main/updates/announcements.json"
 
         @Volatile
         private var instance: AnnouncementManager? = null

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Urdu bottom row.
+-->
+
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+    <!-- U+0638: "ظ" ARABIC LETTER ZAH -->
+    <Key latin:keySpec="&#x0638;" />
+    <!-- U+0637: "ط" ARABIC LETTER TAH -->
+    <Key latin:keySpec="&#x0637;" />
+    <!-- U+0698: "ژ" ARABIC LETTER JEH -->
+    <Key latin:keySpec="&#x0698;" />
+    <!-- U+0632: "ز" ARABIC LETTER ZAIN -->
+    <Key latin:keySpec="&#x0632;" />
+    <!-- U+0631: "ر" ARABIC LETTER REH
+         U+0691: "ڑ" ARABIC LETTER RREH (Urdu) -->
+    <Key
+        latin:keySpec="&#x0631;"
+        latin:moreKeys="&#x0691;" />
+    <!-- U+0630: "ذ" ARABIC LETTER THAL -->
+    <Key latin:keySpec="&#x0630;" />
+    <!-- U+062F: "د" ARABIC LETTER DAL
+         U+0688: "ڈ" ARABIC LETTER DDAL (Urdu) -->
+    <Key
+        latin:keySpec="&#x062F;"
+        latin:moreKeys="&#x0688;" />
+    <!-- U+067E: "پ" ARABIC LETTER PEH -->
+    <Key latin:keySpec="&#x067E;" />
+    <!-- U+0648: "و" ARABIC LETTER WAW
+         U+0624: "ؤ" ARABIC LETTER WAW WITH HAMZA ABOVE
+         U+06C6: "ۆ" ARABIC LETTER OE -->
+    <Key
+        latin:keySpec="&#x0648;"
+        latin:moreKeys="&#x0624;,&#x06C6;" />
+    <include latin:keyboardLayout="@xml/keys_urdu3_right" />
+</merge>

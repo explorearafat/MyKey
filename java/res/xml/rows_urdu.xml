@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Urdu rows. Same skeleton as the Farsi rows: three Arabic-script
+    letter rows plus the shared bottom row.
+-->
+
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+    <include latin:keyboardLayout="@xml/key_styles_common" />
+    <include latin:keyboardLayout="@xml/row_number_switch" />
+    <Row
+        latin:keyWidth="9.091%p"
+        latin:keyLabelFlags="fontNormal"
+    >
+        <include latin:keyboardLayout="@xml/rowkeys_urdu1" />
+    </Row>
+    <Row
+        latin:keyWidth="9.091%p"
+        latin:keyLabelFlags="fontNormal"
+    >
+        <include latin:keyboardLayout="@xml/rowkeys_urdu2" />
+    </Row>
+    <Row
+        latin:keyWidth="9.091%p"
+        latin:keyLabelFlags="fontNormal"
+    >
+        <include latin:keyboardLayout="@xml/rowkeys_urdu3" />
+        <Key
+            latin:keyStyle="deleteKeyStyle"
+            latin:keyWidth="fillRight" />
+    </Row>
+    <include latin:keyboardLayout="@xml/row_qwerty4" />
+</merge>

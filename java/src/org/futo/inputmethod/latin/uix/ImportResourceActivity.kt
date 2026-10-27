@@ -174,10 +174,10 @@ enum class FileKind {
 
     fun getAddonUrlForLocale(locale: Locale?): String {
         return when(this) {
-            VoiceInput -> "https://keyboard.futo.org/voice-input-models?locale=${locale?.toLanguageTag() ?: ""}"
-            Transformer -> "https://keyboard.futo.org/models?locale=${locale?.toLanguageTag() ?: ""}"
-            Dictionary -> "https://keyboard.futo.org/dictionaries?locale=${locale?.toLanguageTag() ?: ""}"
-            Invalid -> "https://keyboard.futo.org/"
+            VoiceInput -> "https://mykey.app/voice-input-models?locale=${locale?.toLanguageTag() ?: ""}"
+            Transformer -> "https://mykey.app/models?locale=${locale?.toLanguageTag() ?: ""}"
+            Dictionary -> "https://mykey.app/dictionaries?locale=${locale?.toLanguageTag() ?: ""}"
+            Invalid -> "https://mykey.app/"
         }
     }
 }

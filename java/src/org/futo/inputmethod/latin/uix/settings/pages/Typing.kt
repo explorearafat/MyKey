@@ -437,14 +437,14 @@ fun TypingScreen(navController: NavHostController = rememberNavController()) {
     ScrollableList {
         ScreenTitle("Keyboard", showBack = true, navController)
 
-        SettingRadio(
-            title = "Keyboard Font Style",
-            options = listOf("nothing", "normal"),
-            optionNames = listOf("Nothing Dot Font", "Normal System Font"),
-            setting = useDataStore(
-                key = KeyboardFontSetting.key,
-                default = KeyboardFontSetting.default
-            )
+        // Font choice moved to its own page, where each option can be shown
+        // in its actual typeface instead of being described in words.
+        NavigationItem(
+            title = "Keyboard Font",
+            subtitle = "Typeface used for keys, hints and suggestions",
+            style = NavigationItemStyle.Misc,
+            navigate = { navController.navigate("fonts") },
+            icon = painterResource(id = R.drawable.file_text)
         )
 
         NavigationItem(

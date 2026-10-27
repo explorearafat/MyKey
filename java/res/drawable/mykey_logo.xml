@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MyKey logo mark (horizontal-safe square lockup).
+  Same keycap + "M" + amber accent geometry as the launcher icon, so the
+  brand reads identically in-app and on the home screen.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:pathData="M38,26 L70,26 A12,12 0 0 1 82,38 L82,70 A12,12 0 0 1 70,82 L38,82 A12,12 0 0 1 26,70 L26,38 A12,12 0 0 1 38,26 Z"
+        android:fillColor="#101828"
+        android:strokeColor="#F2B233"
+        android:strokeWidth="3" />
+
+    <path
+        android:pathData="M41,68 L41,43 L54,58 L67,43 L67,68"
+        android:fillColor="#00000000"
+        android:strokeColor="#4C8DF6"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+    <path
+        android:pathData="M68,68 m-4,0 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0"
+        android:fillColor="#F2B233" />
+</vector>

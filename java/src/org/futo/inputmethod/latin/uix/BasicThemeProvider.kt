@@ -12,6 +12,7 @@ import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.ColorInt
 import org.futo.inputmethod.keyboard.Key
+import org.futo.inputmethod.latin.uix.fonts.keyboardFontById
 import org.futo.inputmethod.latin.uix.theme.presets.OrbitThemeHelper
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.material3.ColorScheme
@@ -207,13 +208,9 @@ class BasicThemeProvider(
         keyHintColor = context.getSettingBlocking(KeyHintColorSetting)
         keyboardHeight = context.getSettingBlocking(KeyboardHeightMultiplierSetting)
         keyboardFont = context.getSettingBlocking(KeyboardFontSetting)
-        keyboardTypeface = if (isOrbitTheme) {
-            ResourcesCompat.getFont(context, R.font.ndot_family) ?: Typeface.DEFAULT
-        } else if (keyboardFont == "normal") {
-            Typeface.DEFAULT
-        } else {
-            ResourcesCompat.getFont(context, R.font.ndot_family)
-        }
+        // Resolved through the MyKey font registry so a newly added font is
+        // picked up here with no changes to this function.
+        keyboardTypeface = keyboardFontById(keyboardFont).typeface(context)
 
         val primary = colorScheme.primary.toArgb()
         val secondary = colorScheme.secondary.toArgb()

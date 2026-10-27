@@ -19,7 +19,7 @@ import org.futo.inputmethod.latin.uix.getSetting
 import org.futo.inputmethod.latin.BuildConfig
 import java.lang.Exception
 
-const val UPDATE_URL = "https://keyboard.futo.org/keyboard_version"
+const val UPDATE_URL = "https://mykey.app/keyboard_version"
 
 suspend fun checkForUpdate(): UpdateResult? {
     if(!BuildConfig.UPDATE_CHECKING) return null
@@ -40,7 +40,7 @@ suspend fun checkForUpdate(): UpdateResult? {
                 val latestVersion = data[0].toInt()
                 val latestVersionUrl = data[1]
                 val latestVersionString = data[2]
-                if(latestVersionUrl.startsWith("https://voiceinput.futo.org/") || latestVersionUrl.startsWith("https://keyboard.futo.org/")){
+                if(latestVersionUrl.startsWith("https://cdn.mykey.app/") || latestVersionUrl.startsWith("https://mykey.app/")){
                     Log.d("UpdateChecking", "Retrieved update for version ${latestVersionString}")
                     UpdateResult(
                         nextVersion = latestVersion,

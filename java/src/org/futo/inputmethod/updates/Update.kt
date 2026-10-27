@@ -84,9 +84,9 @@ fun Context.openURI(uri: String, newTask: Boolean = false) {
 
 fun Context.openManualUpdateCheck() {
     if(BuildConfig.IS_PLAYSTORE_BUILD) {
-        openURI("https://keyboard.futo.org/manual_update?version=${BuildConfig.VERSION_CODE}&build=playstore", newTask = true)
+        openURI("https://mykey.app/manual_update?version=${BuildConfig.VERSION_CODE}&build=playstore", newTask = true)
     } else {
-        openURI("https://keyboard.futo.org/manual_update?version=${BuildConfig.VERSION_CODE}", newTask = true)
+        openURI("https://mykey.app/manual_update?version=${BuildConfig.VERSION_CODE}", newTask = true)
     }
 }
 
@@ -157,7 +157,7 @@ fun ConditionalMigrateUpdateNotice() {
 
                 Box(modifier = Modifier.weight(1.0f)) {
                     Button(onClick = {
-                        context.openURI("https://keyboard.futo.org/#downloads")
+                        context.openURI("https://mykey.app/#downloads")
                     }, modifier = Modifier.align(Alignment.Center)) {
                         Text("Visit")
                     }

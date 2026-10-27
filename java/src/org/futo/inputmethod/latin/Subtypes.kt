@@ -98,10 +98,16 @@ object Subtypes {
     fun addDefaultSubtypesIfNecessary(context: Context) {
         if(!context.isDirectBootUnlocked) return
 
-        val defaultBengali = listOf(
+        // The seven languages MyKey ships with, enabled out of the box so the
+        // spacebar swipe cycles through all of them from the first launch.
+        val myKeyDefaultLanguages = listOf(
+            "en_US:",
             "bn_BD:KeyboardLayoutSet=bengali_avro:",
-            "bn_BD:KeyboardLayoutSet=bengali_jatiyo:",
-            "bn_BD:KeyboardLayoutSet=bengali_probhat:"
+            "hi:KeyboardLayoutSet=hindi:",
+            "ar:KeyboardLayoutSet=arabic:",
+            "ur:KeyboardLayoutSet=urdu:",
+            "es:KeyboardLayoutSet=spanish:",
+            "zh_CN:KeyboardLayoutSet=chinese_pinyin:"
         )
 
         val currentSubtypes = context.getSettingBlocking(SubtypesSetting)
@@ -110,23 +116,7 @@ object Subtypes {
             return
         }
 
-        val locales = context.resources.configuration.locales
-        val initialSubtypes = mutableSetOf("en_US:")
-        initialSubtypes.addAll(defaultBengali)
-
-        if(locales.size() > 0) {
-            for(i in 0 until locales.size()) {
-                val locale = locales.get(i).stripExtensionsIfNeeded()
-                val layout = findClosestLocaleLayouts(locale).firstOrNull() ?: continue
-                val value = subtypeToString(
-                    InputMethodSubtypeBuilder()
-                        .setSubtypeLocale(locale.stripExtensionsIfNeeded().toString())
-                        .setSubtypeExtraValue("KeyboardLayoutSet=$layout")
-                        .build()
-                )
-                initialSubtypes.add(value)
-            }
-        }
+        val initialSubtypes = LinkedHashSet(myKeyDefaultLanguages)
 
         context.setSettingBlocking(SubtypesSetting.key, initialSubtypes)
         context.setSettingBlocking(ActiveSubtype.key, initialSubtypes.first())
@@ -239,31 +229,15 @@ object Subtypes {
     }
 
     fun getDirectBootInitialLayouts(context: Context): Set<String> {
-        val layouts = mutableSetOf(
+        return setOf(
             "en_US:",
             "bn_BD:KeyboardLayoutSet=bengali_avro:",
-            "bn_BD:KeyboardLayoutSet=bengali_jatiyo:",
-            "bn_BD:KeyboardLayoutSet=bengali_probhat:"
+            "hi:KeyboardLayoutSet=hindi:",
+            "ar:KeyboardLayoutSet=arabic:",
+            "ur:KeyboardLayoutSet=urdu:",
+            "es:KeyboardLayoutSet=spanish:",
+            "zh_CN:KeyboardLayoutSet=chinese_pinyin:"
         )
-
-        val locales = context.resources.configuration.locales
-        if(locales.size() == 0) return layouts
-
-        for(i in 0 until locales.size()) {
-            val locale = locales.get(i).stripExtensionsIfNeeded()
-            val layout = findClosestLocaleLayouts(locale).firstOrNull() ?: continue
-
-            val value = subtypeToString(
-                InputMethodSubtypeBuilder()
-                    .setSubtypeLocale(locale.stripExtensionsIfNeeded().toString())
-                    .setSubtypeExtraValue("KeyboardLayoutSet=$layout")
-                    .build()
-            )
-
-            layouts.add(value)
-        }
-
-        return layouts
     }
 
     fun switchToNextLanguage(context: Context, direction: Int) {

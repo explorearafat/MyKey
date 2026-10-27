@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MyKey — Chinese Pinyin rows. QWERTY skeleton with custom key rows that
+    carry the pinyin tone marks on long-press.
+-->
+
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <include
+        latin:keyboardLayout="@xml/key_styles_common" />
+    <include latin:keyboardLayout="@xml/row_number_switch" />
+    <Row
+        latin:keyWidth="10%p"
+    >
+        <include
+            latin:keyboardLayout="@xml/rowkeys_pinyin1" />
+    </Row>
+    <Row
+        latin:keyWidth="10%p"
+    >
+        <include
+            latin:keyboardLayout="@xml/rowkeys_pinyin2"
+            latin:keyXPos="5%p" />
+    </Row>
+    <Row
+        latin:keyWidth="10%p"
+    >
+        <Key
+            latin:keyStyle="shiftKeyStyle"
+            latin:keyWidth="15%p"
+            latin:visualInsetsRight="1%p" />
+        <include
+            latin:keyboardLayout="@xml/rowkeys_pinyin3" />
+        <Key
+            latin:keyStyle="deleteKeyStyle"
+            latin:keyWidth="fillRight" />
+    </Row>
+    <include latin:keyboardLayout="@xml/row_qwerty4" />
+</merge>

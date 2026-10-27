@@ -13,7 +13,8 @@ object Dictionaries {
         "fr" to R.raw.main_fr,
         "it" to R.raw.main_it,
         "pt_br" to R.raw.main_pt_br,
-        "ru" to R.raw.main_ru
+        "ru" to R.raw.main_ru,
+        "zh" to R.raw.main_zh
     )
 
     @RawRes

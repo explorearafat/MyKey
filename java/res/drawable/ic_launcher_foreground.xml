@@ -1,25 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MyKey launcher icon - adaptive-icon foreground layer.
+
+  A rounded keycap containing a bold "M" with an amber accent dot: the
+  "key" in MyKey. Geometry mirrors the rasterised legacy mipmaps
+  (mipmap-*/ic_launcher*.webp) so both icon systems look identical.
+
+  Canvas is the standard 108x108dp adaptive-icon viewport. The safe zone is
+  the central 72dp (18..90 on both axes); all artwork sits inside it, so no
+  part is clipped by any launcher mask shape.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="512"
-    android:viewportHeight="512">
-  <group android:scaleX="0.6675"
-      android:scaleY="0.6675"
-      android:translateX="85.12"
-      android:translateY="29.742222">
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Keycap outline -->
     <path
-        android:pathData="M127.08,338.96L384.92,338.96Z"
-        android:strokeLineJoin="round"
-        android:strokeWidth="150"
+        android:pathData="M29.7,18.9 L78.3,18.9 A10.8,10.8 0 0 1 89.1,29.7 L89.1,78.3 A10.8,10.8 0 0 1 78.3,89.1 L29.7,89.1 A10.8,10.8 0 0 1 18.9,78.3 L18.9,29.7 A10.8,10.8 0 0 1 29.7,18.9 Z"
         android:fillColor="#00000000"
-        android:strokeColor="#1b1d1f"
-        android:strokeLineCap="round"/>
+        android:strokeColor="#F2B233"
+        android:strokeWidth="3" />
+
+    <!-- M glyph: a single stroked polyline -->
     <path
-        android:pathData="M385.91,338m-49.44,0a49.44,49.44 0,1 1,98.88 0a49.44,49.44 0,1 1,-98.88 0"
-        android:strokeLineJoin="round"
-        android:strokeWidth="184.024"
-        android:fillColor="#d71921"
-        android:strokeColor="#00000000"
-        android:strokeLineCap="round"/>
-  </group>
+        android:pathData="M39.42,65.34 L39.42,40.5 L52.92,57.78 L66.42,40.5 L66.42,65.34"
+        android:fillColor="#00000000"
+        android:strokeColor="#4C8DF6"
+        android:strokeWidth="6.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+    <!-- Amber accent dot -->
+    <path
+        android:pathData="M71.82,70.74 m-3.67,0 a3.67,3.67 0 1 0 7.34,0 a3.67,3.67 0 1 0 -7.34,0"
+        android:fillColor="#F2B233" />
 </vector>

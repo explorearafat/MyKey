@@ -1,0 +1,14 @@
+{
+  "latestVersion": "1.0.0",
+  "title": "MyKey v1.0.0 (Stable)",
+  "downloadUrl": "https://github.com/explorearafat/MyKey/releases/latest/download/MyKey.apk",
+  "changelog": [
+    "Initial public release",
+    "Pixel design system with 27 themes and 7 keyboard fonts",
+    "English, Bangla, Hindi, Arabic, Urdu, Spanish and Chinese (Pinyin) keyboards",
+    "Swipe the spacebar to switch language",
+    "Pinyin to hanzi suggestions built in",
+    "Glide typing, clipboard history and emoji picker",
+    "100% offline - no internet permission"
+  ]
+}

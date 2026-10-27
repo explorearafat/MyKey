@@ -10,7 +10,7 @@ val PreviewModels = listOf(
     ModelInfo(
         name = "ml4_model",
         description = "A simple model",
-        author = "FUTO",
+        author = "MyKey",
         license = "GPL",
         features = listOf("inverted_space", "xbu_char_autocorrect_v1", "char_embed_mixing_v1"),
         languages = listOf("en-US"),
@@ -23,7 +23,7 @@ val PreviewModels = listOf(
     ModelInfo(
         name = "ml4_model",
         description = "A simple model",
-        author = "FUTO",
+        author = "MyKey",
         license = "GPL",
         features = listOf("inverted_space", "xbu_char_autocorrect_v1", "char_embed_mixing_v1"),
         languages = listOf("en-US"),
@@ -36,7 +36,7 @@ val PreviewModels = listOf(
     ModelInfo(
         name = "gruby",
         description = "Polish Model",
-        author = "FUTO",
+        author = "MyKey",
         license = "GPL",
         features = listOf("inverted_space", "xbu_char_autocorrect_v1", "char_embed_mixing_v1"),
         languages = listOf("pl"),
@@ -48,7 +48,7 @@ val PreviewModels = listOf(
     ModelInfo(
         name = "gruby",
         description = "Polish Model",
-        author = "FUTO",
+        author = "MyKey",
         license = "GPL",
         features = listOf("inverted_space", "xbu_char_autocorrect_v1", "char_embed_mixing_v1"),
         languages = listOf("pl"),

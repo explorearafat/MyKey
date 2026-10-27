@@ -23,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -43,6 +44,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,18 +68,139 @@ import org.futo.inputmethod.latin.uix.settings.NavigationItemStyle
 import org.futo.inputmethod.latin.uix.settings.NeuCard
 import org.futo.inputmethod.latin.uix.settings.SectionHeader
 import org.futo.inputmethod.latin.uix.settings.useDataStoreValue
-import org.futo.inputmethod.latin.uix.theme.Doto
+import org.futo.inputmethod.latin.uix.theme.DisplayFont
 import org.futo.inputmethod.latin.uix.theme.Inter
 import org.futo.inputmethod.updates.AppUpdate
 import org.futo.inputmethod.updates.UpdateChecker
 import org.futo.inputmethod.updates.UpdateSheet
 
-private val NothingRed = Color(0xFFE5252A)
-private val CardBackground = Color(0xFF0E0E11)
-private val SurfaceVariant = Color(0xFF1B1B1F)
-private val BorderColor = Color(0xFF26262B)
-private val DividerColor = Color(0xFF1E1E22)
-private val TextSecondary = Color(0xFF8E8E93)
+/*
+ * MyKey home screen.
+ *
+ * Layout, top to bottom:
+ *   1. BrandHero      - logo mark, wordmark, tagline, version pill
+ *   2. QuickActionGrid- the four things people actually come here to do
+ *   3. Input & Languages
+ *   4. Bengali Layouts
+ *   5. Customization
+ *   6. Updates
+ *   7. About Developer
+ *   8. A pinned "Try typing" capsule that stays put while the page scrolls.
+ *
+ * All colours are pulled from MaterialTheme.colorScheme so the whole screen
+ * re-skins itself whenever the user changes keyboard theme.
+ */
+
+@Composable
+private fun BrandHero(
+    versionName: String,
+    modifier: Modifier = Modifier
+) {
+    val accent = MaterialTheme.colorScheme.primary
+    val onSurface = MaterialTheme.colorScheme.onSurface
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+
+    NeuCard(modifier = modifier.fillMaxWidth(), contentPadding = 18.dp) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(54.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .border(1.dp, accent.copy(alpha = 0.5f), RoundedCornerShape(16.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(42.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(14.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "MyKey",
+                    fontFamily = DisplayFont,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 26.sp,
+                    letterSpacing = 1.sp,
+                    color = onSurface
+                )
+                Text(
+                    text = "Your keyboard, your way",
+                    fontFamily = Inter,
+                    fontSize = 12.sp,
+                    color = muted
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(accent.copy(alpha = 0.14f))
+                    .border(1.dp, accent.copy(alpha = 0.45f), RoundedCornerShape(14.dp))
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+            ) {
+                Text(
+                    text = "v$versionName",
+                    fontFamily = DisplayFont,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 11.sp,
+                    color = accent
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun QuickActionTile(
+    title: String,
+    iconRes: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    val accent = MaterialTheme.colorScheme.primary
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surface)
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(14.dp)
+    ) {
+        Column {
+            Box(
+                modifier = Modifier
+                    .size(34.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = iconRes),
+                    contentDescription = null,
+                    tint = accent,
+                    modifier = Modifier.size(19.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = title,
+                fontFamily = Inter,
+                fontWeight = FontWeight.Medium,
+                fontSize = 13.sp,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+}
 
 @Composable
 fun BengaliLayoutToggleRow(
@@ -100,13 +223,13 @@ fun BengaliLayoutToggleRow(
                 fontFamily = Inter,
                 fontWeight = FontWeight.Medium,
                 fontSize = 15.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = subtitle,
                 fontFamily = Inter,
                 fontSize = 12.sp,
-                color = TextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         Switch(
@@ -114,13 +237,23 @@ fun BengaliLayoutToggleRow(
             enabled = canToggle,
             onCheckedChange = onToggle,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
-                checkedTrackColor = NothingRed,
-                uncheckedThumbColor = TextSecondary,
-                uncheckedTrackColor = SurfaceVariant
+                checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                checkedTrackColor = MaterialTheme.colorScheme.primary,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
             )
         )
     }
+}
+
+@Composable
+private fun Divider() {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(1.dp)
+            .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.6f))
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,12 +268,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     var availableUpdate by remember { mutableStateOf<AppUpdate?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
-    // Announcement manager & state
+    // Announcements
     val announcementManager = remember { AnnouncementManager.getInstance(context) }
     val availableAnnouncement by announcementManager.availableAnnouncement.collectAsState()
-    val isCheckingAnnouncement by announcementManager.isChecking.collectAsState()
     var showAnnouncementSheet by remember { mutableStateOf(false) }
 
+    // Bengali subtypes
     val currentSubtypes = useDataStoreValue(SubtypesSetting)
     val avroSubtype = "bn_BD:KeyboardLayoutSet=bengali_avro:"
     val jatiyoSubtype = "bn_BD:KeyboardLayoutSet=bengali_jatiyo:"
@@ -165,7 +298,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     LaunchedEffect(Unit) {
         Subtypes.addDefaultSubtypesIfNecessary(context)
 
-        // Check for updates in background
         val result = UpdateChecker.checkForUpdate()
         val update = result.getOrNull()
         if (update != null && update.isUpdateAvailable) {
@@ -173,14 +305,13 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             showUpdateSheet = true
         }
 
-        // Check for announcements in background
         announcementManager.checkForAnnouncements(coroutineScope, forceShow = false)
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -191,51 +322,59 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Header: ORBIT BOARD & Version Tag
+            BrandHero(
+                versionName = BuildConfig.VERSION_NAME,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // ---- Quick actions -------------------------------------------------
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Column {
-                    Text(
-                        "ORBIT BOARD",
-                        fontFamily = Doto,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        letterSpacing = 1.sp,
-                        color = Color.White
-                    )
-                    Text(
-                        "Crafted for Nothing OS",
-                        fontFamily = Inter,
-                        fontSize = 12.sp,
-                        color = TextSecondary
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(NothingRed.copy(alpha = 0.15f))
-                        .border(1.dp, NothingRed.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
-                        .padding(horizontal = 10.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        "v${BuildConfig.VERSION_NAME}",
-                        fontFamily = Doto,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 11.sp,
-                        color = NothingRed
-                    )
-                }
+                QuickActionTile(
+                    title = "Languages",
+                    iconRes = R.drawable.globe,
+                    modifier = Modifier.weight(1f),
+                    onClick = { navController.navigate("languages") }
+                )
+                QuickActionTile(
+                    title = "Themes",
+                    iconRes = R.drawable.themes,
+                    modifier = Modifier.weight(1f),
+                    onClick = { navController.navigate("themes") }
+                )
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            // 1. INPUT & LANGUAGES
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                QuickActionTile(
+                    title = "Typing",
+                    iconRes = R.drawable.keyboard,
+                    modifier = Modifier.weight(1f),
+                    onClick = { navController.navigate("typing") }
+                )
+                QuickActionTile(
+                    title = "Prediction",
+                    iconRes = R.drawable.text_prediction,
+                    modifier = Modifier.weight(1f),
+                    onClick = { navController.navigate("predictiveText") }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // ---- Input & Languages ---------------------------------------------
             SectionHeader(title = "Input & Languages", modifier = Modifier.padding(horizontal = 16.dp))
             NeuCard(
                 modifier = Modifier
@@ -249,36 +388,21 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     navigate = { navController.navigate("languages") },
                     icon = painterResource(id = R.drawable.globe)
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
-                )
+                Divider()
                 NavigationItem(
                     title = "Keyboard & Typing",
                     style = NavigationItemStyle.HomeSecondary,
                     navigate = { navController.navigate("typing") },
                     icon = painterResource(id = R.drawable.keyboard)
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
-                )
+                Divider()
                 NavigationItem(
                     title = "Text Prediction",
                     style = NavigationItemStyle.HomeTertiary,
                     navigate = { navController.navigate("predictiveText") },
                     icon = painterResource(id = R.drawable.text_prediction)
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
-                )
+                Divider()
                 NavigationItem(
                     title = stringResource(R.string.edit_personal_dictionary),
                     style = NavigationItemStyle.HomeSecondary,
@@ -293,7 +417,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 2. BENGALI KEYBOARD LAYOUTS
+            // ---- Bengali layouts -----------------------------------------------
             SectionHeader(title = "Bengali Layouts", modifier = Modifier.padding(horizontal = 16.dp))
             NeuCard(
                 modifier = Modifier
@@ -302,33 +426,23 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 contentPadding = 4.dp
             ) {
                 BengaliLayoutToggleRow(
-                    title = "Avro (অভ্র)",
+                    title = "Avro",
                     subtitle = "Phonetic typing (ami -> আমি)",
                     active = isAvroActive,
                     canToggle = !isAvroActive || currentSubtypes.size > 1,
                     onToggle = { enabled -> toggleSubtype(avroSubtype, enabled) }
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
-                )
+                Divider()
                 BengaliLayoutToggleRow(
-                    title = "Jatiyo (জাতীয়)",
-                    subtitle = "National standard layout (ক খ গ)",
+                    title = "Jatiyo",
+                    subtitle = "National standard layout",
                     active = isJatiyoActive,
                     canToggle = !isJatiyoActive || currentSubtypes.size > 1,
                     onToggle = { enabled -> toggleSubtype(jatiyoSubtype, enabled) }
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
-                )
+                Divider()
                 BengaliLayoutToggleRow(
-                    title = "Probhat (প্রভাত)",
+                    title = "Probhat",
                     subtitle = "Probhat keyboard layout",
                     active = isProbhatActive,
                     canToggle = !isProbhatActive || currentSubtypes.size > 1,
@@ -338,7 +452,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 3. CUSTOMIZATION & ANNOUNCEMENTS
+            // ---- Customization --------------------------------------------------
             SectionHeader(title = "Customization", modifier = Modifier.padding(horizontal = 16.dp))
             NeuCard(
                 modifier = Modifier
@@ -347,17 +461,19 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 contentPadding = 4.dp
             ) {
                 NavigationItem(
-                    title = "Theme",
+                    title = "Keyboard Theme",
                     style = NavigationItemStyle.HomeTertiary,
                     navigate = { navController.navigate("themes") },
                     icon = painterResource(id = R.drawable.themes)
                 )
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(DividerColor)
+                Divider()
+                NavigationItem(
+                    title = "Font Style",
+                    style = NavigationItemStyle.HomePrimary,
+                    navigate = { navController.navigate("fonts") },
+                    icon = painterResource(id = R.drawable.file_text)
                 )
+                Divider()
                 NavigationItem(
                     title = "Announcements",
                     style = NavigationItemStyle.HomeSecondary,
@@ -380,12 +496,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     icon = painterResource(id = R.drawable.ic_campaign)
                 )
                 if (isDeveloper || LocalInspectionMode.current) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(DividerColor)
-                    )
+                    Divider()
                     NavigationItem(
                         title = "Developer Settings",
                         style = NavigationItemStyle.HomeTertiary,
@@ -397,7 +508,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 4. UPDATES
+            // ---- Updates ---------------------------------------------------------
             SectionHeader(title = "Updates", modifier = Modifier.padding(horizontal = 16.dp))
             NeuCard(
                 modifier = Modifier
@@ -416,7 +527,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                                     } else {
                                         Toast.makeText(
                                             context,
-                                            "Orbit Board is up to date (v${BuildConfig.VERSION_NAME})",
+                                            "MyKey is up to date (v${BuildConfig.VERSION_NAME})",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
@@ -424,7 +535,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                                 onFailure = {
                                     Toast.makeText(
                                         context,
-                                        "Orbit Board is up to date (v${BuildConfig.VERSION_NAME})",
+                                        "MyKey is up to date (v${BuildConfig.VERSION_NAME})",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -446,30 +557,30 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             modifier = Modifier
                                 .size(38.dp)
                                 .clip(RoundedCornerShape(10.dp))
-                                .background(SurfaceVariant)
-                                .border(1.dp, BorderColor, RoundedCornerShape(10.dp)),
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.activity),
                                 contentDescription = null,
-                                tint = NothingRed,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         Column {
                             Text(
-                                "Check for Updates",
+                                text = "Check for Updates",
                                 fontFamily = Inter,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 15.sp,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
-                                if (isCheckingUpdate) "Checking releases..." else "Version ${BuildConfig.VERSION_NAME} • Tap to check",
+                                text = if (isCheckingUpdate) "Checking releases..." else "Version ${BuildConfig.VERSION_NAME} - tap to check",
                                 fontFamily = Inter,
                                 fontSize = 12.sp,
-                                color = TextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -477,23 +588,23 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     if (isCheckingUpdate) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(18.dp),
-                            color = NothingRed,
+                            color = MaterialTheme.colorScheme.primary,
                             strokeWidth = 2.dp
                         )
                     } else {
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(14.dp))
-                                .background(SurfaceVariant)
-                                .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                                 .padding(horizontal = 12.dp, vertical = 6.dp)
                         ) {
                             Text(
-                                "Check",
+                                text = "Check",
                                 fontFamily = Inter,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 12.sp,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -502,14 +613,14 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // 5. ABOUT DEVELOPER
-            SectionHeader(title = "About Developer", modifier = Modifier.padding(horizontal = 16.dp))
+            // ---- About -----------------------------------------------------------
+            SectionHeader(title = "About", modifier = Modifier.padding(horizontal = 16.dp))
             DeveloperDetailsCard(modifier = Modifier.padding(horizontal = 16.dp))
 
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // Bottom "Try Typing" capsule
+        // ---- Pinned "Try typing" capsule -------------------------------------
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -520,8 +631,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     .fillMaxWidth()
                     .height(50.dp)
                     .clip(RoundedCornerShape(25.dp))
-                    .background(Color(0xFF141416))
-                    .border(1.dp, BorderColor, RoundedCornerShape(25.dp))
+                    .background(MaterialTheme.colorScheme.primary)
                     .clickable {
                         val intent = Intent().apply {
                             setClass(context, TextEditPopupActivity::class.java)
@@ -532,11 +642,11 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    stringResource(R.string.try_typing),
+                    text = stringResource(R.string.try_typing),
                     fontFamily = Inter,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

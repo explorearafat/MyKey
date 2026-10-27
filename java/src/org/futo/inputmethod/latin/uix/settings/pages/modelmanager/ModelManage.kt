@@ -54,7 +54,7 @@ fun DamagedModelScreen(model: ModelInfoLoader, navController: NavHostController 
             title = "Visit FAQ",
             style = NavigationItemStyle.Misc,
             navigate = {
-                context.openURI("https://gitlab.futo.org/alex/futo-keyboard-lm-docs/-/blob/main/README.md")
+                context.openURI("https://mykey.app/docs/lm-training")
             }
         )
         NavigationItem(

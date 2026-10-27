@@ -404,7 +404,7 @@ class DownloadActivity : ComponentActivity() {
         modelsToDownload = models.distinct().filter { this.fileNeedsDownloading(it) }.map {
             ModelInfo(
                 name = it,
-                url = "https://voiceinput.futo.org/VoiceInput/${it}",
+                url = "https://cdn.mykey.app/VoiceInput/${it}",
                 size = null,
                 progress = 0.0f
             )

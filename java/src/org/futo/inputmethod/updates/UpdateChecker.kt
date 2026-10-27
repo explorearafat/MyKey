@@ -22,8 +22,8 @@ data class AppUpdate(
 )
 
 object UpdateChecker {
-    const val RAW_UPDATE_URL = "https://raw.githubusercontent.com/fahitakrim/my-artifacts/main/apps/orbitboard/update.json"
-    const val GITHUB_API_URL = "https://api.github.com/repos/fahitakrim/my-artifacts/releases?per_page=15"
+    const val RAW_UPDATE_URL = "https://raw.githubusercontent.com/explorearafat/MyKey/main/updates/update.json"
+    const val GITHUB_API_URL = "https://api.github.com/repos/explorearafat/MyKey/releases?per_page=15"
 
     private val _isChecking = MutableStateFlow(false)
     val isChecking: StateFlow<Boolean> = _isChecking.asStateFlow()
@@ -42,7 +42,7 @@ object UpdateChecker {
                 return@withContext Result.success(rawUpdate)
             }
 
-            // 2. Fallback to GitHub Releases API with strict filtering for Orbit Board
+            // 2. Fallback to GitHub Releases API with strict filtering for MyKey
             val releasesResult = runCatching { fetchFromReleasesApi(GITHUB_API_URL, currentVersion) }
             val releasesUpdate = releasesResult.getOrNull()
             if (releasesUpdate != null) {
@@ -53,7 +53,7 @@ object UpdateChecker {
             // If neither returned an update, report that app is on current version (up to date)
             val upToDate = AppUpdate(
                 versionName = currentVersion,
-                releaseTitle = "Orbit Board",
+                releaseTitle = "MyKey",
                 releaseNotes = "Already on latest version.",
                 downloadUrl = "",
                 isUpdateAvailable = false
@@ -73,7 +73,7 @@ object UpdateChecker {
             requestMethod = "GET"
             connectTimeout = 5000
             readTimeout = 5000
-            setRequestProperty("User-Agent", "OrbitBoard/$currentVersion")
+            setRequestProperty("User-Agent", "MyKey/$currentVersion")
             setRequestProperty("Accept", "application/json")
         }
         return try {
@@ -90,7 +90,7 @@ object UpdateChecker {
             } else {
                 json.optString("releaseNotes", "Bug fixes and performance improvements.")
             }
-            val title = json.optString("title", "Orbit Board v$latestVer (Stable)")
+            val title = json.optString("title", "MyKey v$latestVer (Stable)")
             val isAvailable = isNewerVersion(remote = latestVer, current = currentVersion)
             AppUpdate(
                 versionName = latestVer,
@@ -110,7 +110,7 @@ object UpdateChecker {
             requestMethod = "GET"
             connectTimeout = 6000
             readTimeout = 6000
-            setRequestProperty("User-Agent", "OrbitBoard/$currentVersion")
+            setRequestProperty("User-Agent", "MyKey/$currentVersion")
             setRequestProperty("Accept", "application/vnd.github.v3+json")
         }
         return try {
@@ -143,7 +143,7 @@ object UpdateChecker {
                         break
                     }
                 }
-                // Never fall back to index 0 (which may be Orbit Music)
+                // Never fall back to index 0 (which may be a music track)
                 matchedObj ?: return null
             } else {
                 val singleObj = JSONObject(responseBody)
@@ -163,7 +163,7 @@ object UpdateChecker {
                 "Bug fixes and performance improvements."
             }
             val body = cleanReleaseNotes(rawBody)
-            val htmlUrl = targetRelease.optString("html_url", "https://github.com/fahitakrim/my-artifacts/releases")
+            val htmlUrl = targetRelease.optString("html_url", "https://github.com/explorearafat/MyKey/releases")
 
             var downloadUrl = htmlUrl
             val assets = targetRelease.optJSONArray("assets")

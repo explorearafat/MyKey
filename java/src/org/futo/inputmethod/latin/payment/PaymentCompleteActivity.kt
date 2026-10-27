@@ -84,10 +84,10 @@ class PaymentCompleteActivity : ComponentActivity() {
                                     )
 
                                     NavigationItem(
-                                        title = "Email keyboard@futo.org",
+                                        title = "Email support@mykey.app",
                                         style = NavigationItemStyle.Mail,
                                         navigate = {
-                                            openURI("mailto:keyboard@futo.org")
+                                            openURI("mailto:support@mykey.app")
                                         })
                                 }
                             }

@@ -1,5 +1,6 @@
 package org.futo.inputmethod.latin.uix
 
+import org.futo.inputmethod.latin.uix.fonts.keyboardFontById
 import android.content.Context
 import android.os.Build
 import android.view.View
@@ -248,7 +249,8 @@ fun RowScope.SuggestionItem(words: SuggestedWords, idx: Int, isPrimary: Boolean,
     }
 
     val (keyboardFont, _) = useDataStore(key = KeyboardFontSetting.key, default = KeyboardFontSetting.default)
-    val font = if (keyboardFont == "normal") FontFamily.Default else FontFamily(Font(R.font.ndot_family))
+    // Same registry the keyboard uses, so the suggestion bar always matches
+    val font = keyboardFontById(keyboardFont).family
     val textStyle = when (actualIsPrimary) {
         true -> suggestionStylePrimary
         false -> suggestionStyleAlternative

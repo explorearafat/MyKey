@@ -3,6 +3,7 @@ package org.futo.inputmethod.latin.uix.settings
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,15 +12,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.res.painterResource
-import org.futo.inputmethod.latin.R
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,16 +29,27 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.futo.inputmethod.latin.uix.theme.Doto
+import org.futo.inputmethod.latin.BuildConfig
+import org.futo.inputmethod.latin.R
+import org.futo.inputmethod.latin.uix.theme.DisplayFont
 import org.futo.inputmethod.latin.uix.theme.Inter
 
-private val NothingRed = Color(0xFFE5252A)
-private val CardBorder = Color(0xFF26262B)
-private val SurfaceVariant = Color(0xFF1B1B1F)
-private val TextSecondary = Color(0xFF8E8E93)
+/*
+ * About / credits card.
+ *
+ * Previously this was a developer business card pinned with hardcoded colours
+ * (Color.White text on a fixed #1B1B1F surface) which meant it turned into
+ * unreadable white-on-cream under the light Rose Quartz theme. Everything here
+ * now comes from MaterialTheme.colorScheme, so it re-skins with the app.
+ *
+ * It also leads with the product (name, version, build) rather than with a
+ * person, since this is the app's About section: attribution to the upstream
+ * project and its author belongs here too, but as credit, not as the heading.
+ */
 
 @Composable
 fun FacebookBrandIcon(modifier: Modifier = Modifier, tint: Color = Color.White) {
@@ -94,119 +104,184 @@ fun XBrandIcon(modifier: Modifier = Modifier, tint: Color = Color.White) {
 }
 
 @Composable
+private fun SocialButton(
+    label: String,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .size(38.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) { content() }
+}
+
+@Composable
+private fun ContactRow(
+    label: String,
+    value: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 4.dp, vertical = 9.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            fontFamily = Inter,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Text(
+            text = value,
+            fontFamily = Inter,
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
 fun DeveloperDetailsCard(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val accent = MaterialTheme.colorScheme.primary
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
 
-    NeuCard(modifier = modifier.fillMaxWidth(), contentPadding = 14.dp) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(42.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(SurfaceVariant)
-                        .border(1.dp, CardBorder, RoundedCornerShape(12.dp)),
-                    contentAlignment = Alignment.Center
+    fun open(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        context.startActivity(intent)
+    }
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        // ---- Product identity ---------------------------------------------
+        NeuCard(modifier = Modifier.fillMaxWidth(), contentPadding = 16.dp) {
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.people_and_body),
-                        contentDescription = null,
-                        tint = NothingRed,
-                        modifier = Modifier.size(22.dp)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .clip(RoundedCornerShape(13.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .border(1.dp, accent.copy(alpha = 0.45f), RoundedCornerShape(13.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier.size(34.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.size(12.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "MyKey",
+                            fontFamily = DisplayFont,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            letterSpacing = 0.5.sp,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = "Version ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                            fontFamily = Inter,
+                            fontSize = 12.sp,
+                            color = muted
+                        )
+                    }
                 }
 
-                Column {
-                    Text(
-                        text = "Fahim Takrim",
-                        fontFamily = Doto,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp,
-                        letterSpacing = 0.5.sp,
-                        color = Color.White
-                    )
-                    Text(
-                        text = "Developer & Designer",
-                        fontFamily = Inter,
-                        fontSize = 12.sp,
-                        color = TextSecondary
-                    )
-                }
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "A private, offline-first keyboard. Nothing you type leaves your device.",
+                    fontFamily = Inter,
+                    fontSize = 12.sp,
+                    lineHeight = 17.sp,
+                    color = muted
+                )
             }
+        }
 
-            // Social Profile Buttons
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Facebook
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(SurfaceVariant)
-                        .border(1.dp, CardBorder, CircleShape)
-                        .clickable {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://www.facebook.com/profile.php?id=61592810150809")
-                            ).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-                            context.startActivity(intent)
-                        },
-                    contentAlignment = Alignment.Center
+        Spacer(modifier = Modifier.height(10.dp))
+
+        // ---- Developer ----------------------------------------------------
+        NeuCard(modifier = Modifier.fillMaxWidth(), contentPadding = 14.dp) {
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FacebookBrandIcon(modifier = Modifier.size(16.dp), tint = Color.White)
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .border(1.dp, accent.copy(alpha = 0.40f), RoundedCornerShape(12.dp))
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.mykey_avatar),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.size(11.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = DeveloperContact.NAME,
+                            fontFamily = DisplayFont,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = DeveloperContact.ROLE,
+                            fontFamily = Inter,
+                            fontSize = 11.sp,
+                            color = muted
+                        )
+                    }
                 }
 
-                // X (Twitter)
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(SurfaceVariant)
-                        .border(1.dp, CardBorder, CircleShape)
-                        .clickable {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://x.com/TakrimFahim")
-                            ).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-                            context.startActivity(intent)
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    XBrandIcon(modifier = Modifier.size(16.dp), tint = Color.White)
-                }
+                Spacer(modifier = Modifier.height(6.dp))
 
-                // GitHub
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(SurfaceVariant)
-                        .border(1.dp, CardBorder, CircleShape)
-                        .clickable {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://github.com/fahitakrim")
-                            ).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-                            context.startActivity(intent)
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.code),
-                        contentDescription = "GitHub",
-                        tint = Color.White,
-                        modifier = Modifier.size(16.dp)
-                    )
-                }
+                ContactRow(
+                    label = "Instagram",
+                    value = DeveloperContact.INSTAGRAM_HANDLE,
+                    onClick = { open(DeveloperContact.INSTAGRAM) }
+                )
+                ContactRow(
+                    label = "TikTok",
+                    value = DeveloperContact.TIKTOK_HANDLE,
+                    onClick = { open(DeveloperContact.TIKTOK) }
+                )
+                ContactRow(
+                    label = "Facebook",
+                    value = DeveloperContact.FACEBOOK_HANDLE,
+                    onClick = { open(DeveloperContact.FACEBOOK) }
+                )
+                ContactRow(
+                    label = "WhatsApp",
+                    value = DeveloperContact.WHATSAPP_DISPLAY,
+                    onClick = { open(DeveloperContact.WHATSAPP) }
+                )
             }
         }
     }
