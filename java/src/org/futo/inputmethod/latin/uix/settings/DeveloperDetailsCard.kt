@@ -151,6 +151,7 @@ private fun ContactRow(
     }
 }
 
+@Composable
 fun DeveloperDetailsCard(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val accent = MaterialTheme.colorScheme.primary
