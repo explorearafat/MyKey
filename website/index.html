@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>MyKey — The Pixel Keyboard</title>
+<meta name="description" content="MyKey is a fast, private, offline Android keyboard built on a pixel design system. 7 languages, 27 themes, 7 fonts — swipe the spacebar to switch language.">
+<meta name="theme-color" content="#0a0f19">
+
+<meta property="og:title" content="MyKey — The Pixel Keyboard">
+<meta property="og:description" content="A fast, private, offline Android keyboard with a pixel soul. 7 languages, 27 themes, 7 fonts.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101828'/%3E%3Crect x='6' y='6' width='20' height='20' fill='none' stroke='%23F2B233' stroke-width='2'/%3E%3Cpath d='M10 22V12l6 7 6-7v10' fill='none' stroke='%234C8DF6' stroke-width='2.5' stroke-linecap='square'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&family=Pixelify+Sans:wght@400..700&family=DotGothic16&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__logo" href="#top">
+      <span class="dot"></span> MyKey
+    </a>
+    <nav class="nav__links">
+      <a href="#themes">Themes</a>
+      <a href="#fonts">Fonts</a>
+      <a href="#languages">Languages</a>
+      <a href="#features">Features</a>
+      <a href="#developer">Developer</a>
+    </nav>
+    <a class="btn btn--ghost" href="#download" style="padding:11px 16px;font-size:11px">Get MyKey</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero__grid">
+
+    <div>
+      <p class="eyebrow">Offline · Private · Pixel-perfect</p>
+
+      <h1 class="px-h1 hero__title">
+        TYPE IN<br>PIXELS.
+      </h1>
+
+      <p class="lede hero__sub">
+        MyKey is a keyboard with a pixel soul — 27 themes, 7 typefaces and
+        7 languages. Nothing you type ever leaves your phone.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn" href="#download">Download APK</a>
+        <a class="btn btn--ghost" href="#themes">See the themes</a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat"><b>27</b><span>Themes</span></div>
+        <div class="stat"><b>7</b><span>Fonts</span></div>
+        <div class="stat"><b>7</b><span>Languages</span></div>
+        <div class="stat"><b>0</b><span>Trackers</span></div>
+      </div>
+    </div>
+
+    <div>
+      <!-- 3D phone is injected here by three-scene.js -->
+      <div class="stage" id="stage">
+        <span class="stage__badge">3D / LIVE</span>
+        <span class="stage__hint">drag to rotate</span>
+      </div>
+
+      <div class="switcher" id="switcher" role="tablist" aria-label="Keyboard theme"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>English <b>·</b> বাংলা <b>·</b> हिन्दी <b>·</b> العربية <b>·</b> اردو <b>·</b> Español <b>·</b> 中文 <b>·</b> 100% offline <b>·</b> no trackers <b>·</b></span>
+    <span>English <b>·</b> বাংলা <b>·</b> हिन्दी <b>·</b> العربية <b>·</b> اردو <b>·</b> Español <b>·</b> 中文 <b>·</b> 100% offline <b>·</b> no trackers <b>·</b></span>
+  </div>
+</div>
+
+<!-- ============ THEMES ============ -->
+<section id="themes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head__txt">
+        <p class="eyebrow">Keyboard backgrounds</p>
+        <h2 class="px-h2">27 THEMES</h2>
+      </div>
+      <p class="lede" style="margin:0;max-width:38ch">
+        MyKey opens on <strong style="color:var(--paper)">Warm White</strong> — a soft,
+        paper-like light theme. Switch once and you land in
+        <strong style="color:var(--paper)">Classic Black</strong>, a graphite mix built for dark rooms.
+      </p>
+    </div>
+
+    <div class="gallery">
+      <article class="shot reveal">
+        <img src="assets/kb-warm-white.png" alt="MyKey Warm White keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Warm White</span>
+          <span class="shot__tag">Default</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-classic-black.png" alt="MyKey Classic Black keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Classic Black</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-midnight-blue.png" alt="MyKey Midnight Blue keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Midnight Blue</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-forest.png" alt="MyKey Forest keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Forest</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-sunset.png" alt="MyKey Sunset keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Sunset</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-monochrome.png" alt="MyKey Monochrome keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Monochrome</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-rose-quartz.png" alt="MyKey Rose Quartz keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Rose Quartz</span>
+          <span class="shot__tag">Light</span>
+        </div>
+      </article>
+
+      <article class="shot reveal">
+        <img src="assets/kb-terminal.png" alt="MyKey Terminal keyboard theme" loading="lazy" width="900" height="560">
+        <div class="shot__meta">
+          <span class="shot__name">Terminal</span>
+          <span class="shot__tag">Dark</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="pix-divider"></div>
+
+<!-- ============ FONTS ============ -->
+<section id="fonts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head__txt">
+        <p class="eyebrow">Typefaces</p>
+        <h2 class="px-h2">PICK YOUR PIXELS</h2>
+      </div>
+      <p class="lede" style="margin:0;max-width:38ch">
+        Seven keyboard faces ship in the app. The default is a dot-matrix pixel
+        font; the rest are one tap away in Settings &rsaquo; Fonts.
+      </p>
+    </div>
+
+    <div class="fonts">
+      <div class="font-card reveal">
+        <span class="font-card__name">Dot Matrix · default</span>
+        <div class="font-card__sample sf-dot">The quick brown fox</div>
+        <span class="font-card__note">Bundled pixel face, ships as default</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Space Grotesk</span>
+        <div class="font-card__sample sf-mono">The quick brown fox</div>
+        <span class="font-card__note">Geometric, technical</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Outfit</span>
+        <div class="font-card__sample" style="font-family:'Space Mono',monospace;font-weight:700;font-size:30px">The quick brown fox</div>
+        <span class="font-card__note">Soft, rounded geometric</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Inter</span>
+        <div class="font-card__sample" style="font-family:'Space Mono',monospace;font-size:30px">The quick brown fox</div>
+        <span class="font-card__note">Neutral, very legible</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">JetBrains Mono</span>
+        <div class="font-card__sample" style="font-family:'Space Mono',monospace;font-size:30px">The quick brown fox</div>
+        <span class="font-card__note">Monospaced, typewriter feel</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Silkscreen</span>
+        <div class="font-card__sample sf-silk" style="font-size:32px">The quick brown fox</div>
+        <span class="font-card__note">Pixel display face</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Press Start 2P</span>
+        <div class="font-card__sample sf-display" style="font-size:19px">The quick<br>brown fox</div>
+        <span class="font-card__note">Arcade heading face</span>
+      </div>
+
+      <div class="font-card reveal">
+        <span class="font-card__name">Pixelify Sans</span>
+        <div class="font-card__sample sf-pixelify" style="font-size:32px">The quick brown fox</div>
+        <span class="font-card__note">Readable pixel body face</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pix-divider"></div>
+
+<!-- ============ LANGUAGES ============ -->
+<section id="languages">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head__txt">
+        <p class="eyebrow">Multilingual</p>
+        <h2 class="px-h2">SEVEN LANGUAGES</h2>
+      </div>
+      <p class="lede" style="margin:0;max-width:38ch">
+        Don't hunt through menus. <strong style="color:var(--paper)">Swipe left or right
+        on the spacebar</strong> and the keyboard changes language instantly.
+      </p>
+    </div>
+
+    <div class="langs">
+      <div class="lang reveal"><span class="lang__glyph">Aa</span><div class="lang__name">English</div><div class="lang__code">en</div></div>
+      <div class="lang reveal"><span class="lang__glyph">অ</span><div class="lang__name">বাংলা</div><div class="lang__code">bn</div></div>
+      <div class="lang reveal"><span class="lang__glyph">अ</span><div class="lang__name">हिन्दी</div><div class="lang__code">hi</div></div>
+      <div class="lang reveal"><span class="lang__glyph">ع</span><div class="lang__name">العربية</div><div class="lang__code">ar</div></div>
+      <div class="lang reveal"><span class="lang__glyph">ا</span><div class="lang__name">اردو</div><div class="lang__code">ur</div></div>
+      <div class="lang reveal"><span class="lang__glyph">Ñ</span><div class="lang__name">Español</div><div class="lang__code">es</div></div>
+      <div class="lang reveal"><span class="lang__glyph">中</span><div class="lang__name">中文</div><div class="lang__code">zh</div></div>
+    </div>
+
+    <div class="card reveal" style="margin-top:26px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <div class="feat__ico" style="margin:0;flex:none">⇄</div>
+      <p style="margin:0;font-family:var(--f-mono);font-size:19px;color:var(--grey);flex:1;min-width:240px">
+        <strong style="color:var(--paper)">Spacebar swipe:</strong>
+        slide your thumb across the space key to jump to the next language. No popups, no taps.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head__txt">
+        <p class="eyebrow">Why MyKey</p>
+        <h2 class="px-h2">BUILT LIGHT</h2>
+      </div>
+    </div>
+
+    <div class="feats">
+      <div class="feat reveal">
+        <div class="feat__ico">1</div>
+        <h4>Zero network</h4>
+        <p>No internet permission. Suggestions, dictionaries and voice input all run on-device.</p>
+      </div>
+
+      <div class="feat reveal">
+        <div class="feat__ico">2</div>
+        <h4>Fast by design</h4>
+        <p>One shared font registry, no duplicate theme code, no legacy baggage. It opens instantly.</p>
+      </div>
+
+      <div class="feat reveal">
+        <div class="feat__ico">3</div>
+        <h4>Glide typing</h4>
+        <p>Swipe across keys to type whole words, with a live trace path and next-word prediction.</p>
+      </div>
+
+      <div class="feat reveal">
+        <div class="feat__ico">4</div>
+        <h4>Clipboard &amp; emoji</h4>
+        <p>Built-in clipboard history and a full emoji picker, one tap from the toolbar.</p>
+      </div>
+
+      <div class="feat reveal">
+        <div class="feat__ico">5</div>
+        <h4>Haptic control</h4>
+        <p>Dial the vibration length to your taste, or turn it off entirely.</p>
+      </div>
+
+      <div class="feat reveal">
+        <div class="feat__ico">6</div>
+        <h4>Resizable</h4>
+        <p>Change keyboard height and bottom offset so it fits your hand, not the other way round.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOWNLOAD ============ -->
+<section id="download">
+  <div class="wrap">
+    <div class="card reveal" style="text-align:center;padding:52px 26px">
+      <p class="eyebrow" style="justify-content:center">Free · Open source · Apache 2.0</p>
+      <h2 class="px-h2" style="margin-bottom:18px">GET MYKEY</h2>
+      <p class="lede" style="margin:0 auto 30px;text-align:center">
+        Android 7.0 and up. No account, no sign-up, no ads.
+      </p>
+      <div class="hero__cta" style="justify-content:center">
+        <a class="btn" href="https://github.com/explorearafat/MyKey/releases/latest/download/MyKey.apk" id="apk-link" target="_blank" rel="noopener">Download APK</a>
+        <a class="btn btn--ghost" href="#developer">Contact the developer</a>
+      </div>
+      <p style="font-family:var(--f-pixel);font-size:10px;letter-spacing:.14em;color:var(--grey-2);margin:26px 0 0;text-transform:uppercase">
+        arm64 · armeabi-v7a · universal
+      </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="developer">
+  <div class="wrap">
+    <div class="footer__grid">
+
+      <div>
+        <div class="dev">
+          <img class="dev__avatar" src="assets/avatar.png" alt="MyKey developer avatar" width="54" height="54">
+          <div>
+            <div class="dev__name">Eyasin Arafat</div>
+            <div class="dev__role">Developer &amp; Designer, MyKey</div>
+          </div>
+        </div>
+
+        <p style="font-family:var(--f-mono);font-size:18px;color:var(--grey);max-width:44ch;margin:0 0 24px">
+          Built MyKey from the ground up — the themes, the fonts, the pixel design
+          system, the website. Reach out any time.
+        </p>
+
+        <div class="socials">
+          <a class="social" href="https://instagram.com/explorearafat" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.2 1 .47 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.2.8-.4.3-.6.7-.8 1.2-.2.4-.4 1-.4 2.1C2.7 8.5 2.7 8.9 2.7 12s0 3.5.1 4.7c0 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.3.4.7.6 1.2.8.4.2 1 .4 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.3.6-.7.8-1.2.2-.4.4-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.3-.4-.7-.6-1.2-.8-.4-.2-1-.4-2.1-.4C15.5 4 15.1 4 12 4m0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8m0 1.8a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2m5.1-2a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3"/></svg>
+            explorearafat
+          </a>
+
+          <a class="social" href="https://tiktok.com/@explorearafat" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.8a5 5 0 0 1-1.1-3.3h-3v11.8a2.6 2.6 0 1 1-1.9-2.5V8.6a5.7 5.7 0 1 0 4.9 5.6V9.4a8 8 0 0 0 4.3 1.2V7.5a4.9 4.9 0 0 1-3.2-1.7"/></svg>
+            explorearafat
+          </a>
+
+          <a class="social" href="https://facebook.com/exploreeyasin" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.5-1.5h1.6V3.7c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.2H7.5V13h2.7v8z"/></svg>
+            exploreeyasin
+          </a>
+
+          <a class="social" href="https://wa.me/8801610709657" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 0 1 0 16.4 8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 0 1 12 3.8m-3 3.5c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2s.8 2.3.9 2.5c.1.2 1.5 2.5 3.7 3.4 1.8.7 2.2.6 2.6.5.4 0 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1 0-.1-.2-.2-.4-.3l-1.4-.7c-.2 0-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.3.1-.4l.3-.4c.1-.1.2-.2.3-.4v-.4l-.6-1.5c-.2-.4-.4-.4-.5-.4z"/></svg>
+            01610709657
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h5>Explore</h5>
+        <ul class="footer__list">
+          <li><a href="#themes">Themes</a></li>
+          <li><a href="#fonts">Fonts</a></li>
+          <li><a href="#languages">Languages</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#download">Download</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2025</span> MyKey</span>
+      <span>Privacy-first · Offline · Apache 2.0</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/three.min.js" defer></script>
+<script src="three-scene.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
